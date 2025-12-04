@@ -28,6 +28,14 @@ loadCategories();
 
 // 2. Fetch , Load and Show Videos on html.
 
+function getTimeString (time){
+    const day = parseInt(time / 86400);
+    const hour = parseInt(time / 3600);
+    const minute = parseInt((time % 3600) / 60);
+    const second = time % 60;
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+}
+
 // create loadVideos function
 // create loadCategories function
 const loadVideos = () => {
@@ -50,7 +58,7 @@ const displayVideos = (videos) => {
       src=${video.thumbnail}
       alt=${video.title}
       />
-      ${video.others.posted_date ? `<span class="absolute bottom-2 right-2 bg-black text-white text-xs px-1 py-1 rounded">${video.others.posted_date}</span>` : ""}
+      ${video.others.posted_date ? `<span class="absolute bottom-2 right-2 bg-black text-white text-xs px-1 py-1 rounded">${getTimeString(video.others.posted_date)}</span>` : ""}
   </figure>
   <div class="px-0 py-2 flex gap-2">
     <div>
