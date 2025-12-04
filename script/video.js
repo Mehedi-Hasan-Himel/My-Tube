@@ -44,12 +44,13 @@ const displayVideos = (videos) => {
     const card = document.createElement("div");
     card.classList = "card w-80";
     card.innerHTML = `
-   <figure class="h-[200px] overflow-hidden">
+   <figure class="h-[200px] overflow-hidden relative">
     <img
     class="object-cover w-full h-48 rounded"
       src=${video.thumbnail}
       alt=${video.title}
       />
+      ${video.others.posted_date ? `<span class="absolute bottom-2 right-2 bg-black text-white text-xs px-1 py-1 rounded">${video.others.posted_date}</span>` : ""}
   </figure>
   <div class="px-0 py-2 flex gap-2">
     <div>
@@ -62,7 +63,9 @@ const displayVideos = (videos) => {
         <h2 class="card-title text-lg font-semibold">${video.title}</h2>
         <div class="flex items-center gap-2">
             <p class="text-gray-400">${video.authors[0].profile_name}</p>
-            <img class="w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png"/>
+            ${video.authors[0].verified === true ? '<img class="w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png"/>' : "" }
+            
+            
         </div>
         <p class="text-sm text-gray-500">${video.channel}</p>
         <p class="text-sm text-gray-500">${video.views} views • ${video.date}</p>
