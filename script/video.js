@@ -14,13 +14,11 @@ const displayCategories = (categories) => {
   const categoryContainer = document.getElementById("categories");
   categories.forEach((item) => {
     // create a button.
-    const button = document.createElement("button");
-    button.classList =
-      "btn bg-gray-200 hover:bg-red-600 hover:text-white border-0";
-    button.innerText = item.category;
-
-    // add button to category container
-    categoryContainer.appendChild(button);
+    const buttonContainer = document.createElement("div");
+    buttonContainer.innerHTML = `
+    <button class="btn bg-gray-200 hover:bg-red-600 hover:text-white border-0">${item.category}</button>
+    `;
+    categoryContainer.appendChild(buttonContainer);
   });
 };
 
@@ -28,12 +26,14 @@ loadCategories();
 
 // 2. Fetch , Load and Show Videos on html.
 
-function getTimeString (time){
-    const day = parseInt(time / 86400);
-    const hour = parseInt(time / 3600);
-    const minute = parseInt((time % 3600) / 60);
-    const second = time % 60;
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+function getTimeString(time) {
+  const day = parseInt(time / 86400);
+  const hour = parseInt(time / 3600);
+  const minute = parseInt((time % 3600) / 60);
+  const second = time % 60;
+  return `${hour.toString().padStart(2, "0")}:${minute
+    .toString()
+    .padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
 }
 
 // create loadVideos function
@@ -50,7 +50,7 @@ const displayVideos = (videos) => {
   const videoContainer = document.getElementById("videos");
   videos.forEach((video) => {
     const card = document.createElement("div");
-    card.classList = "card w-80";
+    card.classList = "card w-90 md:w-80";
     card.innerHTML = `
    <figure class="h-[200px] overflow-hidden relative">
     <img
@@ -58,7 +58,13 @@ const displayVideos = (videos) => {
       src=${video.thumbnail}
       alt=${video.title}
       />
-      ${video.others.posted_date ? `<span class="absolute bottom-2 right-2 bg-black text-white text-xs px-1 py-1 rounded">${getTimeString(video.others.posted_date)}</span>` : ""}
+      ${
+        video.others.posted_date
+          ? `<span class="absolute bottom-2 right-2 bg-black text-white text-xs px-1 py-1 rounded">${getTimeString(
+              video.others.posted_date
+            )}</span>`
+          : ""
+      }
   </figure>
   <div class="px-0 py-2 flex gap-2">
     <div>
@@ -71,12 +77,14 @@ const displayVideos = (videos) => {
         <h2 class="card-title text-lg font-semibold">${video.title}</h2>
         <div class="flex items-center gap-2">
             <p class="text-gray-400">${video.authors[0].profile_name}</p>
-            ${video.authors[0].verified === true ? '<img class="w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png"/>' : "" }
+            ${
+              video.authors[0].verified === true
+                ? '<img class="w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png"/>'
+                : ""
+            }
             
             
         </div>
-        <p class="text-sm text-gray-500">${video.channel}</p>
-        <p class="text-sm text-gray-500">${video.views} views • ${video.date}</p>
       </div>
     </div>
   </div>
